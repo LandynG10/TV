@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Install
+        working-directory: web
+        run: npm ci
+      - name: Typecheck and unit tests
+        working-directory: web
+        run: npm run typecheck && npm test
+      - name: Build the APK (web + Android, plain SDK tools)
+        run: android/build-apk.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GrantOS-apk
+          path: android/build/GrantOS.apk

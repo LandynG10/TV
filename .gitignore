@@ -1,0 +1,10 @@
+node_modules/
+web/dist/
+web/e2e/screenshots/
+android/build/
+hardware-report.txt
+.env
+.env.*
+*.log
+.DS_Store
+android/assets/web/
