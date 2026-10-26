@@ -62,6 +62,10 @@ public class MainActivity extends Activity {
             }
         });
         setContentView(webView);
+        // Remote key presses go to the focused view; make sure that's the page from the first press.
+        webView.setFocusable(true);
+        webView.setFocusableInTouchMode(true);
+        webView.requestFocus();
         webView.loadUrl(assets.startUrl());
     }
 
